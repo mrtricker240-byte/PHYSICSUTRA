@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b18">
+<title>Electric Charges and Fields | PhysicsSutra</title>
+
+<style>
+:root{
+  --bg:#080b18;
+  --card:#11172b;
+  --card2:#151e36;
+  --blue:#56aaff;
+  --cyan:#67e8f9;
+  --purple:#a78bfa;
+  --text:#f5f7ff;
+  --muted:#a7b0c8;
+  --border:rgba(255,255,255,.1);
+  --green:#4ade80;
+  --red:#fb7185;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:15px;padding:15px 7%;
+  background:rgba(8,11,24,.94);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--border);
+}
+.logo{font-size:23px;font-weight:900;color:var(--blue)}
+.logo span{color:var(--text)}
+.navlinks{display:flex;gap:20px;align-items:center}
+.navlinks a{font-size:13px;color:var(--muted)}
+.navlinks a:hover{color:var(--blue)}
+.menu-btn{
+  display:none;background:var(--card);color:white;
+  border:1px solid var(--border);padding:7px 11px;border-radius:8px
+}
+.container{width:min(1120px,90%);margin:auto}
+.hero{
+  position:relative;overflow:hidden;
+  padding:70px 0 55px;
+  background:radial-gradient(ellipse at 85% 25%,#173b6c55,transparent 42%);
+}
+.hero-grid{
+  display:grid;grid-template-columns:1.2fr .8fr;
+  align-items:center;gap:35px;
+}
+.badge{
+  display:inline-block;color:var(--cyan);
+  background:#56aaff12;border:1px solid #56aaff44;
+  padding:6px 12px;border-radius:30px;font-size:12px;
+  margin-bottom:18px;
+}
+h1{font-size:clamp(34px,5vw,58px);line-height:1.12;letter-spacing:-1.5px}
+.gradient{
+  background:linear-gradient(90deg,var(--blue),var(--cyan),var(--purple));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p{color:var(--muted);margin:20px 0;max-width:620px}
+.btn{
+  display:inline-block;padding:11px 17px;border-radius:10px;
+  border:1px solid var(--border);background:var(--card);
+  color:var(--text);font-weight:700;font-size:13px;
+  transition:.2s;
+}
+.btn:hover{transform:translateY(-2px);border-color:var(--blue)}
+.btn-primary{background:var(--blue);color:#07101f;border-color:var(--blue)}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.visual{
+  min-height:290px;display:grid;place-items:center;
+  position:relative;border:1px solid var(--border);
+  border-radius:25px;background:linear-gradient(145deg,#101b33,#0a1021);
+}
+.orbit{
+  width:210px;height:210px;border:1px solid #56aaff66;
+  border-radius:50%;display:grid;place-items:center;
+  position:relative;animation:spin 18s linear infinite;
+}
+.orbit:before,.orbit:after{
+  content:"";position:absolute;width:210px;height:95px;
+  border:1px solid #a78bfa66;border-radius:50%;transform:rotate(60deg);
+}
+.orbit:after{transform:rotate(-60deg)}
+.nucleus{
+  width:55px;height:55px;border-radius:50%;
+  background:radial-gradient(circle,#fff,var(--blue) 35%,#2451a5);
+  box-shadow:0 0 45px #56aaff88;z-index:2;
+}
+.electron{
+  position:absolute;width:15px;height:15px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 20px var(--cyan);
+  top:12px;left:98px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  margin-top:25px;
+}
+.stat{
+  padding:15px;border:1px solid var(--border);
+  background:#11172b99;border-radius:13px;text-align:center;
+}
+.stat strong{display:block;color:var(--blue);font-size:22px}
+.stat span{font-size:12px;color:var(--muted)}
+section{padding:38px 0}
+.section-head{margin-bottom:23px}
+.section-head h2{font-size:clamp(25px,4vw,34px);margin-bottom:6px}
+.section-head p{color:var(--muted);font-size:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:17px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:17px;padding:22px;
+}
+.card h3{margin-bottom:9px;font-size:18px}
+.card p,.card li{color:var(--muted);font-size:14px}
+.card ul{padding-left:19px;margin-top:10px}
+.mode-card{cursor:pointer;transition:.2s}
+.mode-card:hover,.mode-card.active{border-color:var(--blue);transform:translateY(-3px)}
+.mode-card.active{background:linear-gradient(145deg,#132748,#11172b)}
+.tag{
+  display:inline-block;font-size:11px;padding:4px 8px;
+  border-radius:6px;background:#56aaff18;color:var(--cyan);
+  margin-bottom:10px;
+}
+.notice{
+  padding:14px 16px;border-left:3px solid var(--blue);
+  background:#56aaff0d;border-radius:0 10px 10px 0;
+  color:var(--muted);font-size:13px;margin-top:15px;
+}
+.formula{
+  background:#080e1e;border:1px solid #56aaff33;
+  border-radius:12px;padding:16px;margin-top:12px;
+}
+.equation{
+  color:var(--cyan);font-size:clamp(18px,3vw,24px);
+  font-weight:800;overflow-wrap:anywhere;
+}
+.small{font-size:12px!important;color:var(--muted)}
+label{display:block;font-size:13px;color:var(--muted);margin:10px 0 5px}
+select,input[type=number]{
+  width:100%;padding:10px;background:#080e1e;color:white;
+  border:1px solid var(--border);border-radius:8px;
+}
+.result{
+  padding:13px;margin-top:12px;border-radius:9px;
+  background:#56aaff12;color:var(--cyan);font-size:14px;
+  overflow-wrap:anywhere;
+}
+.field-canvas{
+  width:100%;height:auto;display:block;
+  border:1px solid var(--border);border-radius:13px;
+  background:#080e1e;margin-top:12px;
+}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.example{margin-bottom:14px}
+.solution{
+  display:none;margin-top:12px;padding:13px;
+  border-radius:10px;background:#080e1e;
+  color:var(--muted);font-size:14px;
+}
+.solution.show{display:block}
+.quiz-option{
+  display:block;width:100%;text-align:left;padding:12px;
+  margin-top:8px;background:#080e1e;color:var(--text);
+  border:1px solid var(--border);border-radius:9px;
+}
+.quiz-option:hover{border-color:var(--blue)}
+.quiz-option.correct{border-color:var(--green);background:#4ade8012}
+.quiz-option.wrong{border-color:var(--red);background:#fb718512}
+#quiz-feedback{margin-top:12px;font-size:14px;color:var(--muted)}
+.progress{
+  height:7px;background:#263047;border-radius:20px;overflow:hidden;margin:12px 0;
+}
+.progress div{height:100%;width:0;background:var(--blue);transition:.3s}
+footer{
+  margin-top:35px;padding:30px 5%;text-align:center;
+  border-top:1px solid var(--border);color:var(--muted);font-size:12px;
+}
+footer a{color:var(--blue)}
+.hidden{display:none!important}
+@media(max-width:760px){
+  nav{padding:13px 5%}
+  .menu-btn{display:block}
+  .navlinks{
+    display:none;position:absolute;top:60px;left:0;right:0;
+    padding:20px;background:#080b18;flex-direction:column;
+    border-bottom:1px solid var(--border);
+  }
+  .navlinks.open{display:flex}
+  .hero{padding-top:45px}
+  .hero-grid{grid-template-columns:1fr}
+  .visual{min-height:250px}
+  .grid3{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+  .stats{gap:7px}
+  .stat{padding:11px 5px}
+  .stat strong{font-size:18px}
+  .stat span{font-size:10px}
+  section{padding:27px 0}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <a class="logo" href="../index.html">Physics<span>Sutra.</span></a>
+  <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation">☰</button>
+  <div class="navlinks" id="navlinks">
+    <a href="../index.html">Home</a>
+    <a href="#study">Study Modes</a>
+    <a href="#concepts">Concepts</a>
+    <a href="#formulas">Formulas</a>
+    <a href="#practice">Practice</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="badge">CLASS 12 PHYSICS · CHAPTER 01</span>
+      <h1>Electric Charges<br> <span class="gradient">and Fields</span></h1>
+      <p>
+        Explore electrostatics through clear concepts, visual learning,
+        important formulas and exam-oriented practice.
+        Prepare for CBSE Boards and JEE Main in one place.
+      </p>
+      <div class="actions">
+        <a href="#concepts" class="btn btn-primary">Start Learning →</a>
+        <a href="#practice" class="btn">Test Yourself</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>08</strong><span>Core Concepts</span></div>
+        <div class="stat"><strong>12+</strong><span>Key Formulas</span></div>
+        <div class="stat"><strong>Quiz</strong><span>Instant Feedback</span></div>
+      </div>
+    </div>
+    <div class="visual" aria-label="Animated electric charge illustration">
+      <div class="orbit">
+        <div class="nucleus"></div>
+        <div class="electron"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section id="study">
+  <div class="section-head">
+    <h2>Choose Your <span class="gradient">Study Mode</span></h2>
+    <p>Choose a mode to focus on your examination goal.</p>
+  </div>
+  <div class="grid2">
+    <div class="card mode-card active" id="boards-card" onclick="chooseMode('boards')">
+      <span class="tag">CBSE BOARD EXAM</span>
+      <h3>📘 Boards Mode</h3>
+      <p>NCERT-based learning, definitions, derivations, important formulas and descriptive questions.</p>
+    </div>
+    <div class="card mode-card" id="jee-card" onclick="chooseMode('jee')">
+      <span class="tag">JEE MAIN 2027</span>
+      <h3>⚡ JEE Mode</h3>
+      <p>Concept application, MCQs, numerical practice and exam-oriented problem-solving.</p>
+    </div>
+  </div>
+  <div class="notice" id="mode-message">
+    Boards mode selected. Focus on NCERT concepts, definitions and written answers.
+  </div>
+</section>
+
+<section id="concepts">
+  <div class="section-head">
+    <h2>Concept <span class="gradient">Explorer</span></h2>
+    <p>Understand the fundamental ideas of electrostatics.</p>
+  </div>
+
+  <div class="grid2">
+    <article class="card">
+      <span class="tag">01 · FUNDAMENTALS</span>
+      <h3>Electric Charge</h3>
+      <p>Electric charge is a basic property of matter responsible for electrical interactions.</p>
+      <ul>
+        <li>Two types: positive and negative.</li>
+        <li>Like charges repel; unlike charges attract.</li>
+        <li>SI unit: coulomb (C).</li>
+        <li>Charge is conserved in an isolated system.</li>
+        <li>Charge is quantised: q = ne, where n is an integer.</li>
+      </ul>
+      <div class="formula">
+        <div class="equation">e = 1.602 × 10⁻¹⁹ C</div>
+        <p class="small">Magnitude of the elementary charge.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="tag">02 · ELECTROSTATIC FORCE</span>
+      <h3>Coulomb's Law</h3>
+      <p>The electrostatic force between two point charges depends on their charges and separation.</p>
+      <div class="formula">
+        <div class="equation">F = k |q₁q₂| / r²</div>
+        <p class="small">In vacuum, k = 1/(4πε₀) ≈ 9 × 10⁹ N m²/C².</p>
+      </div>
+      <ul>
+        <li>The force acts along the line joining the charges.</li>
+        <li>It is repulsive for like charges and attractive for unlike charges.</li>
+        <li>In a medium, the force depends on its permittivity.</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <span class="tag">03 · SUPERPOSITION</span>
+      <h3>Principle of Superposition</h3>
+      <p>The net electrostatic force on a charge is the vector sum of forces exerted by all other charges.</p>
+      <div class="formula">
+        <div class="equation">F⃗net = Σ F⃗i</div>
+        <p class="small">Add force vectors, not just their magnitudes.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="tag">04 · ELECTRIC FIELD</span>
+      <h3>Electric Field</h3>
+      <p>The electric field at a point is the force experienced per unit positive test charge.</p>
+      <div class="formula">
+        <div class="equation">E⃗ = F⃗ / q₀</div>
+        <p class="small">SI unit: N/C or V/m.</p>
+      </div>
+      <p style="margin-top:12px">For a point charge, the magnitude of the field is proportional to |q| and inversely proportional to r².</p>
+      <div class="formula">
+        <div class="equation">E = k |q| / r²</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="tag">05 · FIELD LINES</span>
+      <h3>Electric Field Lines</h3>
+      <ul>
+        <li>They start on positive charges and end on negative charges, or extend to infinity.</li>
+        <li>The tangent at a point gives the field direction.</li>
+        <li>Closer lines indicate a stronger field in a field-line diagram.</li>
+        <li>Electrostatic field lines never intersect.</li>
+        <li>They do not form closed loops in electrostatics.</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <span class="tag">06 · DIPOLE</span>
+      <h3>Electric Dipole</h3>
+      <p>An electric dipole consists of two equal and opposite charges separated by a small distance.</p>
+      <div class="formula">
+        <div class="equation">p = q × 2a</div>
+        <p class="small">Dipole moment magnitude; direction is from negative to positive charge.</p>
+      </div>
+      <p style="margin-top:10px">SI unit: C m. For a uniform electric field, the torque magnitude is τ = pE sin θ.</p>
+    </article>
+
+    <article class="card">
+      <span class="tag">07 · FLUX</span>
+      <h3>Electric Flux</h3>
+      <p>For a uniform electric field passing through a flat surface, flux depends on the field, area and angle.</p>
+      <div class="formula">
+        <div class="equation">Φ = EA cos θ</div>
+        <p class="small">θ is the angle between the field and the area vector.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="tag">08 · GAUSS'S LAW</span>
+      <h3>Gauss's Law</h3>
+      <p>The net electric flux through a closed surface equals the enclosed charge divided by the permittivity of free space.</p>
+      <div class="formula">
+        <div class="equation">∮ E⃗ · dA⃗ = Qenclosed / ε₀</div>
+      </div>
+      <p style="margin-top:10px">It is especially useful when the charge distribution has spherical, cylindrical or planar symmetry.</p>
+    </article>
+  </div>
+
+  <div class="notice">
+    Study note: Use the current CBSE syllabus and official JEE Main syllabus for the relevant examination year. A topic appearing in a textbook does not automatically mean every detail is required in every exam.
+  </div>
+</section>
+
+<section id="visual-lab">
+  <div class="section-head">
+    <h2>Electric Field <span class="gradient">Visual Lab</span></h2>
+    <p>Change the charge configuration to explore the field direction. This is a qualitative visualisation, not a calibrated field simulation.</p>
+  </div>
+
+  <div class="card">
+    <div class="controls">
+      <div>
+        <label for="charge-mode">Charge configuration</label>
+        <select id="charge-mode" onchange="drawField()">
+          <option value="positive">Single positive charge</option>
+          <option value="negative">Single negative charge</option>
+          <option value="dipole">Electric dipole (+ and −)</option>
+        </select>
+      </div>
+      <div>
+        <label for="field-density">Visual density</label>
+        <select id="field-density" onchange="drawField()">
+          <option value="8">Low</option>
+          <option value="12" selected>Medium</option>
+          <option value="18">High</option>
+        </select>
+      </div>
+    </div>
+    <canvas id="field-canvas" class="field-canvas" width="760" height="360" role="img" aria-label="Qualitative electric field direction diagram"></canvas>
+    <p class="small" style="margin-top:10px">Field arrows show direction schematically. For a positive charge, the field points outward; for a negative charge, it points inward. Dipole field lines run from positive to negative.</p>
+  </div>
+</section>
+
+<section id="formulas">
+  <div class="section-head">
+    <h2>Formula <span class="gradient">Lab</span></h2>
+    <p>Use the calculator to estimate Coulomb force for two point charges in vacuum.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>⚡ Coulomb Force Calculator</h3>
+      <p>Enter charge magnitudes and separation. The calculator reports the force magnitude and interaction type.</p>
+      <label for="q1">Charge 1 (μC)</label>
+      <input id="q1" type="number" value="2" step="any">
+      <label for="q2">Charge 2 (μC)</label>
+      <input id="q2" type="number" value="3" step="any">
+      <label for="distance">Separation (cm)</label>
+      <input id="distance" type="number" value="10" min="0.000001" step="any">
+      <label for="sign1">Sign of charge 1</label>
+      <select id="sign1"><option value="1">Positive (+)</option><option value="-1">Negative (−)</option></select>
+      <label for="sign2">Sign of charge 2</label>
+      <select id="sign2"><option value="-1">Negative (−)</option><option value="1">Positive (+)</option></select>
+      <button class="btn btn-primary" style="margin-top:15px" onclick="calculateForce()">Calculate Force</button>
+      <div class="result" id="force-result" aria-live="polite">Enter values and calculate.</div>
+    </div>
+
+    <div class="card">
+      <h3>📌 Formula Vault</h3>
+      <div class="formula">
+        <div class="equation">F = k |q₁q₂| / r²</div>
+        <p class="small">Coulomb's law</p>
+      </div>
+      <div class="formula">
+        <div class="equation">E = k |q| / r²</div>
+        <p class="small">Electric field magnitude of a point charge</p>
+      </div>
+      <div class="formula">
+        <div class="equation">p = q(2a)</div>
+        <p class="small">Dipole moment magnitude</p>
+      </div>
+      <div class="formula">
+        <div class="equation">Φ = EA cos θ</div>
+        <p class="small">Flux for a uniform field through a flat surface</p>
+      </div>
+      <div class="formula">
+        <div class="equation">Φclosed = Qinside / ε₀</div>
+        <p class="small">Gauss's law</p>
+      </div>
+      <div class="notice">Always convert quantities to SI units before substituting into formulas.</div>
+    </div>
+  </div>
+</section>
+
+<section id="examples">
+  <div class="section-head">
+    <h2>Solved <span class="gradient">Examples</span></h2>
+    <p>Learn how to apply the formulas step by step.</p>
+  </div>
+
+  <div class="card example">
+    <span class="tag">EXAMPLE 01</span>
+    <h3>Force between two point charges</h3>
+    <p>Two charges of magnitudes 2 μC and 3 μC are separated by 10 cm in vacuum. Find the force magnitude.</p>
+    <button class="btn" style="margin-top:12px" onclick="toggleSolution('sol1',this)">Show Solution</button>
+    <div class="solution" id="sol1">
+      <strong>Step 1: Convert to SI units.</strong><br>
+      q₁ = 2 × 10⁻⁶ C, q₂ = 3 × 10⁻⁶ C, r = 0.1 m.<br><br>
+      <strong>Step 2: Apply Coulomb's law.</strong><br>
+      F = (9 × 10⁹)(2 × 10⁻⁶)(3 × 10⁻⁶)/(0.1)²<br><br>
+      <strong>Answer: F = 5.4 N.</strong><br>
+      The force is attractive for opposite signs and repulsive for like signs.
+    </div>
+  </div>
+
+  <div class="card example">
+    <span class="tag">EXAMPLE 02</span>
+    <h3>Electric field due to a point charge</h3>
+    <p>Calculate the field magnitude at a distance of 0.3 m from a point charge of 2 μC in vacuum.</p>
+    <button class="btn" style="margin-top:12px" onclick="toggleSolution('sol2',this)">Show Solution</button>
+    <div class="solution" id="sol2">
+      <strong>Formula:</strong> E = k|q|/r²<br><br>
+      q = 2 × 10⁻⁶ C and r = 0.3 m.<br><br>
+      E = (9 × 10⁹)(2 × 10⁻⁶)/(0.3)²<br>
+      E = 18,000/0.09<br><br>
+      <strong>Answer: E = 2 × 10⁵ N/C.</strong><br>
+      For a positive source charge, the field points outward.
+    </div>
+  </div>
+</section>
+
+<section id="practice">
+  <div class="section-head">
+    <h2>Practice <span class="gradient">Arena</span></h2>
+    <p>Answer the questions and check your understanding.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+      <span class="tag">CHAPTER QUIZ</span>
+      <span class="small" id="quiz-count">Question 1 of 6</span>
+    </div>
+    <div class="progress"><div id="quiz-progress"></div></div>
+    <h3 id="quiz-question">Loading question...</h3>
+    <div id="quiz-options"></div>
+    <div id="quiz-feedback" aria-live="polite"></div>
+    <div class="actions" style="margin-top:17px">
+      <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" disabled>Next Question →</button>
+      <button class="btn" id="restart-btn" onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+    <div class="result hidden" id="quiz-result" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="revision">
+  <div class="section-head">
+    <h2>Quick <span class="gradient">Revision</span></h2>
+    <p>Review the core facts before attempting a test.</p>
+  </div>
+  <div class="grid3">
+    <div class="card">
+      <h3>Charge</h3>
+      <p>Quantised, conserved and additive. SI unit: coulomb.</p>
+    </div>
+    <div class="card">
+      <h3>Electric Field</h3>
+      <p>Force per unit positive test charge. SI unit: N/C.</p>
+    </div>
+    <div class="card">
+      <h3>Gauss's Law</h3>
+      <p>Net closed-surface electric flux is enclosed charge divided by ε₀.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>PhysicsSutra</strong> · Understand the Universe</p>
+  <p style="margin-top:6px">Class 12 Physics · Boards + JEE Learning</p>
+  <p style="margin-top:10px"><a href="../index.html">← Back to PhysicsSutra Home</a></p>
+  <p style="margin-top:12px">Educational resource. Check the official syllabus for your examination year.</p>
+</footer>
+
+<script>
+const STORAGE_MODE = "physicsutra-mode";
+const STORAGE_PROGRESS = "physicsutra-ch1-quiz-best";
+
+function toggleMenu(){
+  document.getElementById("navlinks").classList.toggle("open");
+}
+
+document.querySelectorAll(".navlinks a").forEach(link=>{
+  link.addEventListener("click",()=>{
+    document.getElementById("navlinks").classList.remove("open");
+  });
+});
+
+function chooseMode(mode){
+  localStorage.setItem(STORAGE_MODE,mode);
+  document.getElementById("boards-card").classList.toggle("active",mode==="boards");
+  document.getElementById("jee-card").classList.toggle("active",mode==="jee");
+  document.getElementById("mode-message").textContent =
+    mode==="boards"
+    ? "Boards mode selected. Focus on NCERT concepts, definitions and written answers."
+    : "JEE mode selected. Focus on conceptual application, numerical practice and MCQs.";
+}
+
+chooseMode(localStorage.getItem(STORAGE_MODE)==="jee" ? "jee" : "boards");
+
+function toggleSolution(id,button){
+  const box=document.getElementById(id);
+  box.classList.toggle("show");
+  button.textContent=box.classList.contains("show")?"Hide Solution":"Show Solution";
+}
+
+function calculateForce(){
+  const q1=Number(document.getElementById("q1").value);
+  const q2=Number(document.getElementById("q2").value);
+  const rcm=Number(document.getElementById("distance").value);
+  const s1=Number(document.getElementById("sign1").value);
+  const s2=Number(document.getElementById("sign2").value);
+  const out=document.getElementById("force-result");
+
+  if(!Number.isFinite(q1)||!Number.isFinite(q2)||!Number.isFinite(rcm)||
+     rcm<=0||q1===0||q2===0){
+    out.textContent="Please enter non-zero charge magnitudes and a positive separation.";
+    return;
+  }
+
+  const r=rcm/100;
+  const q1C=Math.abs(q1)*1e-6;
+  const q2C=Math.abs(q2)*1e-6;
+  const F=8.9875517923e9*q1C*q2C/(r*r);
+  const interaction=s1===s2?"Repulsive":"Attractive";
+
+  out.textContent=`Force magnitude: ${F.toPrecision(5)} N · ${interaction}`;
+}
+
+/* Qualitative electric field illustration */
+function drawField(){
+  const canvas=document.getElementById("field-canvas");
+  const ctx=canvas.getContext("2d");
+  const mode=document.getElementById("charge-mode").value;
+  const count=Number(document.getElementById("field-density").value);
+  const w=canvas.width,h=canvas.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle="#080e1e";
+  ctx.fillRect(0,0,w,h);
+
+  const charges=[];
+  if(mode==="positive") charges.push({x:w/2,y:h/2,s:1});
+  if(mode==="negative") charges.push({x:w/2,y:h/2,s:-1});
+  if(mode==="dipole"){
+    charges.push({x:w*.36,y:h/2,s:1});
+    charges.push({x:w*.64,y:h/2,s:-1});
+  }
+
+  function field(x,y){
+    let ex=0,ey=0;
+    charges.forEach(q=>{
+      const dx=x-q.x,dy=y-q.y;
+      const rr=dx*dx+dy*dy;
+      if(rr<100)return;
+      const scale=q.s/Math.pow(rr,1.5);
+      ex+=dx*scale;ey+=dy*scale;
+    });
+    return {x:ex,y:ey};
+  }
+
+  function arrow(x,y,dx,dy){
+    const len=Math.hypot(dx,dy)||1;
+    dx/=len;dy/=len;
+    ctx.beginPath();
+    ctx.moveTo(x-dx*5,y-dy*5);
+    ctx.lineTo(x+dx*5,y+dy*5);
+    ctx.lineTo(x+dx*1-dy*4,y+dy*1+dx*4);
+    ctx.moveTo(x+dx*5,y+dy*5);
+    ctx.lineTo(x+dx*1+dy*4,y+dy*1-dx*4);
+    ctx.stroke();
+  }
+
+  const seeds=[];
+  if(mode!=="dipole"){
+    for(let i=0;i<count;i++){
+      const a=2*Math.PI*i/count;
+      seeds.push({
+        x:charges[0].x+14*Math.cos(a),
+        y:charges[0].y+14*Math.sin(a)
+      });
+    }
+  }else{
+    for(let i=0;i<count;i++){
+      const a=2*Math.PI*i/count;
+      seeds.push({
+        x:charges[0].x+12*Math.cos(a),
+        y:charges[0].y+12*Math.sin(a)
+      });
+    }
+  }
+
+  ctx.lineWidth=1.25;
+  ctx.strokeStyle="#56aaff";
+  ctx.fillStyle="#67e8f9";
+
+  seeds.forEach(seed=>{
+    let x=seed.x,y=seed.y;
+    const sign=mode==="negative"?-1:1;
+    for(let step=0;step<650;step++){
+      if(x<3||x>w-3||y<3||y>h-3)break;
+      const nearest=Math.min(...charges.map(q=>Math.hypot(x-q.x,y-q.y)));
+      if(step>2 && nearest<13)break;
+
+      const f=field(x,y);
+      const mag=Math.hypot(f.x,f.y);
+      if(mag<1e-12)break;
+      const dir=mode==="negative"?-1:1;
+      const dx=dir*f.x/mag,dy=dir*f.y/mag;
+      const stepSize=2.5;
+
+      const nx=x+dx*stepSize,ny=y+dy*stepSize;
+      if(step%22===0)arrow(x,y,dx,dy);
+      ctx.beginPath();
+      ctx.moveTo(x,y);
+      ctx.lineTo(nx,ny);
+      ctx.stroke();
+      x=nx;y=ny;
+
+      if(mode==="dipole" && Math.hypot(x-charges[1].x,y-charges[1].y)<13)break;
+    }
+  });
+
+  charges.forEach(q=>{
+    ctx.beginPath();
+    ctx.arc(q.x,q.y,13,0,2*Math.PI);
+    ctx.fillStyle=q.s>0?"#56aaff":"#fb7185";
+    ctx.shadowBlur=18;
+    ctx.shadowColor=ctx.fillStyle;
+    ctx.fill();
+    ctx.shadowBlur=0;
+    ctx.fillStyle="#ffffff";
+    ctx.font="bold 20px Arial";
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
+    ctx.fillText(q.s>0?"+":"−",q.x,q.y+1);
+  });
+}
+drawField();
+
+/* Quiz questions are shuffled on each restart. */
+const questionBank=[
+  {
+    q:"What is the SI unit of electric charge?",
+    o:["Ampere","Coulomb","Volt","Newton"],
+    a:1,
+    e:"Electric charge is measured in coulombs (C)."
+  },
+  {
+    q:"What happens between two like point charges?",
+    o:["They attract","They repel","No force acts","They always neutralise"],
+    a:1,
+    e:"Like charges repel; unlike charges attract."
+  },
+  {
+    q:"The magnitude of Coulomb force varies with separation r as:",
+    o:["r","r²","1/r","1/r²"],
+    a:3,
+    e:"Coulomb's force magnitude follows the inverse-square law."
+  },
+  {
+    q:"The direction of the electric field is defined as the direction of force on:",
+    o:["A negative test charge","A positive test charge","Any massive object","A neutron"],
+    a:1,
+    e:"Electric field direction is the direction of force on a positive test charge."
+  },
+  {
+    q:"The SI unit of electric dipole moment is:",
+    o:["C/m","C m","N/C","J/C"],
+    a:1,
+    e:"Dipole moment equals charge multiplied by separation, so its unit is C m."
+  },
+  {
+    q:"According to Gauss's law, net electric flux through a closed surface depends on:",
+    o:["Only the surface area","Only the enclosed net charge and ε₀","Only the external charges","The surface colour"],
+    a:1,
+    e:"Net flux equals the enclosed net charge divided by ε₀."
+  },
+  {
+    q:"Electric field lines in electrostatics:",
+    o:["Can intersect","Always form closed loops","Never intersect","Always point inward"],
+    a:2,
+    e:"If field lines intersected, the field would have two directions at one point."
+  },
+  {
+    q:"Two charges are multiplied by 2 while their separation is unchanged. The force magnitude becomes:",
+    o:["Half","Double","Four times","Unchanged"],
+    a:1,
+    e:"From Coulomb's law, doubling one charge doubles the force magnitude."
+  },
+  {
+    q:"The electric field inside an ideal conductor in electrostatic equilibrium is:",
+    o:["Zero","Infinite","Always 1 N/C","Always equal to ε₀"],
+    a:0,
+    e:"In electrostatic equilibrium, the electric field within the conducting material is zero."
+  },
+  {
+    q:"For a uniform electric field and a flat surface, flux is maximum in magnitude when the field is:",
+    o:["Parallel to the surface","Perpendicular to the surface","At 45° to the area vector","Zero everywhere"],
+    a:1,
+    e:"Φ = EA cos θ, where θ is measured from the area vector. Maximum magnitude occurs at θ = 0°."
+  }
+];
+
+let quizQuestions=[];
+let quizIndex=0;
+let score=0;
+let answered=false;
+
+function shuffle(array){
+  const a=[...array];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function loadQuestion(){
+  answered=false;
+  const q=quizQuestions[quizIndex];
+  document.getElementById("quiz-count").textContent=
+    `Question ${quizIndex+1} of ${quizQuestions.length}`;
+  document.getElementById("quiz-progress").style.width=
+    `${quizIndex/quizQuestions.length*100}%`;
+  document.getElementById("quiz-question").textContent=q.q;
+  document.getElementById("quiz-feedback").textContent="";
+  document.getElementById("next-btn").disabled=true;
+  document.getElementById("next-btn").textContent=
+    quizIndex===quizQuestions.length-1?"See Results →":"Next Question →";
+  document.getElementById("quiz-result").classList.add("hidden");
+
+  const options=document.getElementById("quiz-options");
+  options.innerHTML="";
+  q.o.forEach((option,index)=>{
+    const btn=document.createElement("button");
+    btn.className="quiz-option";
+    btn.textContent=String.fromCharCode(65+index)+". "+option;
+    btn.onclick=()=>answerQuestion(index,btn);
+    options.appendChild(btn);
+  });
+}
+
+function answerQuestion(index,button){
+  if(answered)return;
+  answered=true;
+  const q=quizQuestions[quizIndex];
+  const buttons=[...document.querySelectorAll(".quiz-option")];
+  buttons.forEach((btn,i)=>{
+    btn.disabled=true;
+    if(i===q.a)btn.classList.add("correct");
+  });
+
+  if(index===q.a){
+    score++;
+    document.getElementById("quiz-feedback").textContent="Correct! "+q.e;
+  }else{
+    button.classList.add("wrong");
+    document.getElementById("quiz-feedback").textContent=
+      "Not quite. "+q.e;
+  }
+  document.getElementById("next-btn").disabled=false;
+}
+
+function nextQuestion(){
+  if(!answered)return;
+  if(quizIndex<quizQuestions.length-1){
+    quizIndex++;
+    loadQuestion();
+  }else{
+    finishQuiz();
+  }
+}
+
+function finishQuiz(){
+  document.getElementById("quiz-progress").style.width="100%";
+  document.getElementById("quiz-question").textContent="Quiz complete!";
+  document.getElementById("quiz-options").innerHTML="";
+  document.getElementById("quiz-feedback").textContent="";
+  document.getElementById("next-btn").disabled=true;
+  document.getElementById("quiz-count").textContent="Completed";
+
+  const previous=Number(localStorage.getItem(STORAGE_PROGRESS)||0);
+  const best=Math.max(previous,score);
+  localStorage.setItem(STORAGE_PROGRESS,String(best));
+
+  const result=document.getElementById("quiz-result");
+  result.classList.remove("hidden");
+  result.textContent=
+    `Your score: ${score}/${quizQuestions.length}. Best score on this browser: ${best}/${quizQuestions.length}. `+
+    (score===quizQuestions.length?"Excellent work!":"Review the concepts and try again.");
+}
+
+function restartQuiz(){
+  quizQuestions=shuffle(questionBank).slice(0,6);
+  quizIndex=0;
+  score=0;
+  loadQuestion();
+}
+
+restartQuiz();
+</script>
+
+</body>
+</html>
